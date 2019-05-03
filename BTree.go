@@ -99,28 +99,38 @@ func ConstructBinaryTreeWithExampleData(data []*BinaryTreeNodeExampleData) (tree
 
 	count := 0
 	for {
-		if queue.Len() == 0 || count == queue.Len() { //count==queue.len()?doult?there should be bug here. if a seperated node or child rank not properly
+		if queue.Len() == 0 || count == queue.Len() {
 			break
 		}
 		e := queue.Front()
 		queue.Remove(e)
-		if d, ok := e.Value.(*BinaryTreeNodeExampleData); ok {
-			node := NewBinaryTreeNode(d)
-			if parent, exist := tempmap[d.GetPid()]; exist {
-				if parentData, ok := parent.GetData().(*BinaryTreeNodeExampleData); ok {
-					if parentData.GetLchildId() == d.GetId() {
-						parent.SetLchild(node)
-					} else {
-						parent.SetRchild(node)
-					}
-					tempmap[d.GetId()] = node
-					count = 0
-					continue
-				}
-			}
+		d, ok := e.Value.(*BinaryTreeNodeExampleData)
+		if !ok {
+			fmt.Println("data type wrong ")
+			queue.PushBack(e)
+			count++
+			continue
 		}
-		queue.PushBack(e)
-		count++
+		if parent, exist := tempmap[d.GetPid()]; exist {
+			parentData, ok := parent.GetData().(*BinaryTreeNodeExampleData)
+			if !ok {
+				fmt.Println("parent data type wrong ")
+				queue.PushBack(e)
+				count++
+				continue
+			}
+			node := NewBinaryTreeNode(d)
+			if parentData.GetLchildId() == d.GetId() {
+				parent.SetLchild(node)
+			} else {
+				parent.SetRchild(node)
+			}
+			tempmap[d.GetId()] = node
+			count = 0
+		} else {
+			queue.PushBack(e)
+			count++
+		}
 	}
 	return root
 }
