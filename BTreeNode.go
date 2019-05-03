@@ -19,6 +19,9 @@ type BinaryTreeNode struct {
 
 //make a new binary tree node
 func NewBinaryTreeNode(data interface{}) *BinaryTreeNode {
+	if data == nil {
+		return &BinaryTreeNode{}
+	}
 	return &BinaryTreeNode{
 		Data:   data,
 		Height: 0,
@@ -130,13 +133,16 @@ func (BTnode *BinaryTreeNode) GetSize() int {
 //set node Height and regression parent height
 //the leaf node's height is 0
 func (BTnode *BinaryTreeNode) SetHeight() {
+	if BTnode == nil {
+		return
+	}
 	height := int(math.Max(float64(BTnode.GetLchild().GetHeight()+1), float64(BTnode.GetRchild().GetHeight()+1)))
 	if BTnode.Height == height {
 		//no need regression
 		return
 	}
 	BTnode.Height = height
-	if BTnode.Parent == nil {
+	if BTnode.GetParent() == nil {
 		//the end of regression
 		return
 	}
@@ -145,6 +151,9 @@ func (BTnode *BinaryTreeNode) SetHeight() {
 
 //set node size and regression parent size
 func (BTnode *BinaryTreeNode) SetSize() {
+	if BTnode == nil {
+		return
+	}
 	size := 1 + BTnode.GetLchild().GetSize() + BTnode.GetRchild().GetSize()
 	if BTnode.Size == size {
 		//no need regression
