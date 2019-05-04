@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package exampleData;
+
+message BinaryTreeNodeExampleData {
+	optional int32 Id = 1;
+	optional int32 Pid = 2;     
+	optional int32 LchildId = 3; 
+	optional int32 RchildId = 4;
+	optional bytes ExtInfo  = 5;
+}
