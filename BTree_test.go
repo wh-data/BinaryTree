@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	pb "github.com/wenhai0007/DataStructure/BinaryTree/exampleData"
+	pb "github.com/wh-data/BinaryTree/exampleData"
 )
 
 //tesing cmd exmaple:
